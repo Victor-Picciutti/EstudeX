@@ -12,23 +12,21 @@ namespace EstudeX.Controller
 {
     [ApiController]
     [Route("[controller]")]
-    public class UtilizadorController : ControllerBase
+    public class DuvidaController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public UtilizadorController(DataContext context)
+        public DuvidaController(DataContext context)
         {
             _context = context;
         }
-
-        List<Utilizador> utilizadores = new List<Utilizador>();
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                List<Utilizador> lista = await _context.TBL_UTILIZADOR.ToListAsync();
+                List<Duvida> lista = await _context.TBL_DUVIDA.ToListAsync();
                 return Ok(lista);
             }
             catch (Exception ex)
@@ -36,7 +34,5 @@ namespace EstudeX.Controller
                 return BadRequest(ex.Message);
             }
         }
-
-        
     }
 }

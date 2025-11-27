@@ -7,28 +7,25 @@ using EstudeX.Data;
 using EstudeX.Models;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace EstudeX.Controller
 {
     [ApiController]
     [Route("[controller]")]
-    public class UtilizadorController : ControllerBase
+    public class RespostaDuvidaController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public UtilizadorController(DataContext context)
+        public RespostaDuvidaController(DataContext context)
         {
             _context = context;
         }
-
-        List<Utilizador> utilizadores = new List<Utilizador>();
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                List<Utilizador> lista = await _context.TBL_UTILIZADOR.ToListAsync();
+                List<RespostaDuvida> lista = await _context.TBL_RESPOSTADUVIDA.ToListAsync();
                 return Ok(lista);
             }
             catch (Exception ex)
@@ -36,7 +33,5 @@ namespace EstudeX.Controller
                 return BadRequest(ex.Message);
             }
         }
-
-        
     }
 }

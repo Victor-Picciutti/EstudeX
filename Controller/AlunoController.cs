@@ -7,6 +7,7 @@ using EstudeX.Data;
 using EstudeX.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace EstudeX.Controller
 {
     [ApiController]

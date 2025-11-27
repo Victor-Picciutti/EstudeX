@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 
 namespace EstudeX.Models
@@ -9,8 +10,6 @@ namespace EstudeX.Models
     public class Duvida
     {
         public int IdDuvida { get; set; }
-
-        public Utilizador Utilizador { get; set; }
 
         public int? IdUtilizador { get; set; }
 
@@ -22,5 +21,9 @@ namespace EstudeX.Models
 
         public string statusDuvida { get; set; }
 
+        [JsonIgnore]
+        public RespostaDuvida? RespostaDuvida { get; set; }
+        [JsonIgnore]
+        public Utilizador? Utilizador { get; set; }
     }
 }

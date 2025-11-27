@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using EstudeX.Models.Enuns;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
 
 namespace EstudeX.Models
 {
@@ -19,8 +21,11 @@ namespace EstudeX.Models
 
         public string UF { get; set; }
 
-        public ICollection<Duvida> Duvidas { get; set; }
-
         public string TipoUtilizador { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Duvida>? Duvida { get; set; }
+        [JsonIgnore]
+        public ICollection<RespostaDuvida>? RespostaDuvida { get; set; }
     }
 }
