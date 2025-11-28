@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,8 +18,8 @@ namespace EstudeX.Data
         public DbSet<Utilizador> TBL_UTILIZADOR { get; set; }
         public DbSet<Aluno> TBL_ALUNO { get; set; }
         public DbSet<Duvida> TBL_DUVIDA { get; set; }
-        public DbSet<RespostaDuvida> TBL_CONTEUDO { get; set; }
         public DbSet<RespostaDuvida> TBL_RESPOSTADUVIDA { get; set; }
+        public DbSet<Serie> TBL_SERIE { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,24 +28,24 @@ namespace EstudeX.Data
             modelBuilder.Entity<Duvida>().ToTable("TBL_DUVIDA");
             modelBuilder.Entity<Aluno>().ToTable("TBL_ALUNO");
             modelBuilder.Entity<RespostaDuvida>().ToTable("TBL_RESPOSTADUVIDA");
-            modelBuilder.Entity<Conteudo>().ToTable("TBL_CONTEUDO");
-
+            modelBuilder.Entity<Serie>().ToTable("TBL_SERIE");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Utilizador>().HasKey(x => x.IdUtilizador); 
             modelBuilder.Entity<Utilizador>().Property(x => x.Nome).HasColumnName("Nome");
             modelBuilder.Entity<Utilizador>().Property(x => x.CPF).HasColumnName("CPF");
-            modelBuilder.Entity<Utilizador>().Property(x => x.UF).HasColumnName("UF");
             modelBuilder.Entity<Utilizador>().Property(x => x.Cidade).HasColumnName("Cidade");
+            modelBuilder.Entity<Utilizador>().Property(x => x.UF).HasColumnName("UF");
             modelBuilder.Entity<Utilizador>().Property(x => x.Foto).HasColumnName("Foto");
             modelBuilder.Entity<Utilizador>().Property(x => x.Senha).HasColumnName("Senha");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Duvida>().HasKey(x => x.IdDuvida);
-            modelBuilder.Entity<Duvida>().Property(x => x.Descricao).HasColumnName("Descricao");
             modelBuilder.Entity<Duvida>().Property(x => x.Titulo).HasColumnName("Titulo");
+            modelBuilder.Entity<Duvida>().Property(x => x.Descricao).HasColumnName("Descricao");
             modelBuilder.Entity<Duvida>().Property(x => x.Momento).HasColumnName("Momento");
             modelBuilder.Entity<Duvida>().Property(x => x.statusDuvida).HasColumnName("StatusDuvida");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<RespostaDuvida>().HasKey(x => x.IdRespostaDuvida);
-            modelBuilder.Entity<RespostaDuvida>().Property(x => x.Momento).HasColumnName("momento");
+            modelBuilder.Entity<RespostaDuvida>().Property(x => x.Momento).HasColumnName("Momento");
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.ConteudoResposta).HasColumnName("ConteudoResposta");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Aluno>().HasKey(x => x.IdUtilizador);
@@ -56,6 +56,9 @@ namespace EstudeX.Data
            // modelBuilder.Entity<Aluno>().Property(x => x.tipoUtilizador).HasColumnName("tipoUtilizador");
             modelBuilder.Entity<Aluno>().Property(x => x.Serie).HasColumnName("serie");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            modelBuilder.Entity<Serie>().HasKey(x => x.IdSerie);
+            modelBuilder.Entity<Serie>().Property(x => x.Ano).HasColumnName("Ano");
+            modelBuilder.Entity<Serie>().Property(x => x.Inicio).HasColumnName("Inicio");
             
 
             modelBuilder.Entity<Utilizador>()
@@ -69,8 +72,7 @@ namespace EstudeX.Data
                 .WithOne(x => x.Utilizador)
                 .HasForeignKey(x => x.IdUtilizador)
                 .IsRequired(false);    
-
-            // Relacionamento Utilizador -> Aluno (1:1)
+                
             modelBuilder.Entity<Aluno>()
                 .HasOne(x => x.Utilizador)
                 .WithOne()
@@ -81,6 +83,12 @@ namespace EstudeX.Data
                 .HasOne(x => x.RespostaDuvida)
                 .WithOne(x => x.Duvida)
                 .HasForeignKey<RespostaDuvida>(x => x.IdDuvida);
+
+            modelBuilder.Entity<Aluno>()
+                .HasOne(x => x.Serie)
+                .WithMany(x => x.Alunos)
+                .HasForeignKey(x => x.IdSerie)
+                .IsRequired(true);  
    
 
                
