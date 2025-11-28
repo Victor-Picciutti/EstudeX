@@ -18,6 +18,7 @@ namespace EstudeX.Data
         public DbSet<Utilizador> TBL_UTILIZADOR { get; set; }
         public DbSet<Aluno> TBL_ALUNO { get; set; }
         public DbSet<Duvida> TBL_DUVIDA { get; set; }
+        public DbSet<RespostaDuvida> TBL_CONTEUDO { get; set; }
         public DbSet<RespostaDuvida> TBL_RESPOSTADUVIDA { get; set; }
 
 
@@ -27,19 +28,21 @@ namespace EstudeX.Data
             modelBuilder.Entity<Duvida>().ToTable("TBL_DUVIDA");
             modelBuilder.Entity<Aluno>().ToTable("TBL_ALUNO");
             modelBuilder.Entity<RespostaDuvida>().ToTable("TBL_RESPOSTADUVIDA");
+            modelBuilder.Entity<Conteudo>().ToTable("TBL_CONTEUDO");
 
             modelBuilder.Entity<Utilizador>().HasKey(x => x.IdUtilizador); 
-            modelBuilder.Entity<Utilizador>().Property(x => x.Nome).HasColumnName("nome");
-            modelBuilder.Entity<Utilizador>().Property(x => x.CPF).HasColumnName("cpf");
-            modelBuilder.Entity<Utilizador>().Property(x => x.UF).HasColumnName("uf");
-            modelBuilder.Entity<Utilizador>().Property(x => x.Cidade).HasColumnName("cidade");
-            modelBuilder.Entity<Utilizador>().Property(x => x.TipoUtilizador).HasColumnName("tipoUtilizador");
+            modelBuilder.Entity<Utilizador>().Property(x => x.Nome).HasColumnName("Nome");
+            modelBuilder.Entity<Utilizador>().Property(x => x.CPF).HasColumnName("CPF");
+            modelBuilder.Entity<Utilizador>().Property(x => x.UF).HasColumnName("UF");
+            modelBuilder.Entity<Utilizador>().Property(x => x.Cidade).HasColumnName("Cidade");
+            modelBuilder.Entity<Utilizador>().Property(x => x.Foto).HasColumnName("Foto");
+            modelBuilder.Entity<Utilizador>().Property(x => x.Senha).HasColumnName("Senha");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Duvida>().HasKey(x => x.IdDuvida);
-            modelBuilder.Entity<Duvida>().Property(x => x.Descricao).HasColumnName("descricao");
-            modelBuilder.Entity<Duvida>().Property(x => x.Titulo).HasColumnName("titulo");
-            modelBuilder.Entity<Duvida>().Property(x => x.Momento).HasColumnName("momento");
-            modelBuilder.Entity<Duvida>().Property(x => x.statusDuvida).HasColumnName("statusDuvida");
+            modelBuilder.Entity<Duvida>().Property(x => x.Descricao).HasColumnName("Descricao");
+            modelBuilder.Entity<Duvida>().Property(x => x.Titulo).HasColumnName("Titulo");
+            modelBuilder.Entity<Duvida>().Property(x => x.Momento).HasColumnName("Momento");
+            modelBuilder.Entity<Duvida>().Property(x => x.statusDuvida).HasColumnName("StatusDuvida");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<RespostaDuvida>().HasKey(x => x.IdRespostaDuvida);
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.Momento).HasColumnName("momento");
@@ -50,7 +53,7 @@ namespace EstudeX.Data
             modelBuilder.Entity<Aluno>().Property(x => x.CPF).HasColumnName("cpf");
             modelBuilder.Entity<Aluno>().Property(x => x.UF).HasColumnName("uf");
             modelBuilder.Entity<Aluno>().Property(x => x.Cidade).HasColumnName("cidade");
-            modelBuilder.Entity<Aluno>().Property(x => x.tipoUtilizador).HasColumnName("tipoUtilizador");
+           // modelBuilder.Entity<Aluno>().Property(x => x.tipoUtilizador).HasColumnName("tipoUtilizador");
             modelBuilder.Entity<Aluno>().Property(x => x.Serie).HasColumnName("serie");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             

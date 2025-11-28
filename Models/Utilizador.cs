@@ -23,6 +23,10 @@ namespace EstudeX.Models
 
         public string TipoUtilizador { get; set; }
 
+        public byte[]? Foto { get; set; }
+
+        public byte[]? Senha { get; set; }
+
         [JsonIgnore]
         public ICollection<Duvida>? Duvida { get; set; }
         [JsonIgnore]
