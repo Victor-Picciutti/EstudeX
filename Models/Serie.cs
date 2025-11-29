@@ -8,11 +8,11 @@ namespace EstudeX.Models
 {
     public class Serie
     {
-        public int IdSerie { get; set; }
+        public int idSerie { get; set; }
         
         public DateOnly Inicio { get; set; }
 
-        public DateTime Ano { get; set; }
+        public string Ano { get; set; }
 
         [JsonIgnore]
         public ICollection<Aluno>? Alunos { get; set; }

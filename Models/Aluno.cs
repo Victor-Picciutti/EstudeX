@@ -10,13 +10,8 @@ namespace EstudeX.Models
 {
     public class Aluno : Utilizador
     {
-
-        public int IdSerie { get; set; }
-
-        [JsonIgnore]
-        public Utilizador? Utilizador { get; set;}
-
-        [JsonIgnore]
+        public int idSerie { get; set; }
         public Serie? Serie { get; set; }
+        
     }
 }

@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,15 +48,9 @@ namespace EstudeX.Data
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.Momento).HasColumnName("Momento");
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.ConteudoResposta).HasColumnName("ConteudoResposta");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            modelBuilder.Entity<Aluno>().HasKey(x => x.IdUtilizador);
-            modelBuilder.Entity<Aluno>().Property(x => x.Nome).HasColumnName("nome");
-            modelBuilder.Entity<Aluno>().Property(x => x.CPF).HasColumnName("cpf");
-            modelBuilder.Entity<Aluno>().Property(x => x.UF).HasColumnName("uf");
-            modelBuilder.Entity<Aluno>().Property(x => x.Cidade).HasColumnName("cidade");
-           // modelBuilder.Entity<Aluno>().Property(x => x.tipoUtilizador).HasColumnName("tipoUtilizador");
-            modelBuilder.Entity<Aluno>().Property(x => x.Serie).HasColumnName("serie");
+            modelBuilder.Entity<Aluno>().Property(x => x.idSerie).HasColumnName("idSerie");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            modelBuilder.Entity<Serie>().HasKey(x => x.IdSerie);
+            modelBuilder.Entity<Serie>().HasKey(x => x.idSerie);
             modelBuilder.Entity<Serie>().Property(x => x.Ano).HasColumnName("Ano");
             modelBuilder.Entity<Serie>().Property(x => x.Inicio).HasColumnName("Inicio");
             
@@ -73,11 +67,11 @@ namespace EstudeX.Data
                 .HasForeignKey(x => x.IdUtilizador)
                 .IsRequired(false);    
                 
-            modelBuilder.Entity<Aluno>()
+            /*modelBuilder.Entity<Aluno>()
                 .HasOne(x => x.Utilizador)
                 .WithOne()
                 .HasForeignKey<Aluno>(x => x.IdUtilizador)
-                .IsRequired(false);
+                .IsRequired(false);*/
 
             modelBuilder.Entity<Duvida>()
                 .HasOne(x => x.RespostaDuvida)
@@ -87,7 +81,7 @@ namespace EstudeX.Data
             modelBuilder.Entity<Aluno>()
                 .HasOne(x => x.Serie)
                 .WithMany(x => x.Alunos)
-                .HasForeignKey(x => x.IdSerie)
+                .HasForeignKey(x => x.idSerie)
                 .IsRequired(true);  
    
 

@@ -20,11 +20,7 @@ namespace EstudeX.Models
         public string Cidade { get; set; }
 
         public string UF { get; set; }
-
-        public string TipoUtilizador { get; set; }
-
         public byte[]? Foto { get; set; }
-
         public byte[]? Senha { get; set; }
 
         [JsonIgnore]

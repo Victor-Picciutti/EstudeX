@@ -21,8 +21,6 @@ namespace EstudeX.Controller
             _context = context;
         }
 
-        List<Utilizador> utilizadores = new List<Utilizador>();
-
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
