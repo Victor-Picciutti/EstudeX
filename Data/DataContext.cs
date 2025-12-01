@@ -24,6 +24,15 @@ namespace EstudeX.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Utilizador>().HasData
+            (
+            new Utilizador(){IdUtilizador = 1, Nome = "João Silva", CPF = "123.456.789-00", Cidade = "São Paulo", UF = "SP", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")},
+            new Utilizador(){IdUtilizador = 2, Nome = "Maria Souza", CPF = "987.654.321-00", Cidade = "Rio de Janeiro", UF = "RJ", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")},
+            new Utilizador(){IdUtilizador = 3, Nome = "Carlos Pereira", CPF = "111.222.333-44", Cidade = "Curitiba", UF = "PR", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")}
+            );
+
+
             modelBuilder.Entity<Utilizador>().ToTable("TBL_UTILIZADOR");
             modelBuilder.Entity<Duvida>().ToTable("TBL_DUVIDA");
             modelBuilder.Entity<Aluno>().ToTable("TBL_ALUNO");
@@ -53,6 +62,8 @@ namespace EstudeX.Data
             modelBuilder.Entity<Serie>().HasKey(x => x.idSerie);
             modelBuilder.Entity<Serie>().Property(x => x.Ano).HasColumnName("Ano");
             modelBuilder.Entity<Serie>().Property(x => x.Inicio).HasColumnName("Inicio");
+
+
             
 
             modelBuilder.Entity<Utilizador>()
