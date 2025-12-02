@@ -27,9 +27,7 @@ namespace EstudeX.Data
 
             modelBuilder.Entity<Utilizador>().HasData
             (
-            new Utilizador(){IdUtilizador = 1, Nome = "João Silva", CPF = "123.456.789-00", Cidade = "São Paulo", UF = "SP", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")},
-            new Utilizador(){IdUtilizador = 2, Nome = "Maria Souza", CPF = "987.654.321-00", Cidade = "Rio de Janeiro", UF = "RJ", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")},
-            new Utilizador(){IdUtilizador = 3, Nome = "Carlos Pereira", CPF = "111.222.333-44", Cidade = "Curitiba", UF = "PR", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")}
+            new Utilizador(){IdUtilizador = 1, Nome = "João Silva", CPF = "123.456.789-00", Cidade = "São Paulo", UF = "SP", Foto = new byte[] { 0 }, Senha = System.Text.Encoding.UTF8.GetBytes("senha123")}
             );
 
 
@@ -53,9 +51,11 @@ namespace EstudeX.Data
             modelBuilder.Entity<Duvida>().Property(x => x.Momento).HasColumnName("Momento");
             modelBuilder.Entity<Duvida>().Property(x => x.statusDuvida).HasColumnName("StatusDuvida");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            modelBuilder.Entity<RespostaDuvida>().HasKey(x => x.IdRespostaDuvida);
+            modelBuilder.Entity<RespostaDuvida>().HasKey(x => x.IdDuvida);
+            modelBuilder.Entity<RespostaDuvida>().Property(x => x.IdDuvida).HasColumnName("idDuvida");
+            modelBuilder.Entity<RespostaDuvida>().Property(x => x.IdUtilizador).HasColumnName("idUtilizador");
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.Momento).HasColumnName("Momento");
-            modelBuilder.Entity<RespostaDuvida>().Property(x => x.ConteudoResposta).HasColumnName("ConteudoResposta");
+            modelBuilder.Entity<RespostaDuvida>().Property(x => x.ConteudoResposta).HasColumnName("TBL_ConteudoReposta");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Aluno>().Property(x => x.idSerie).HasColumnName("idSerie");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,11 +78,6 @@ namespace EstudeX.Data
                 .HasForeignKey(x => x.IdUtilizador)
                 .IsRequired(false);    
                 
-            /*modelBuilder.Entity<Aluno>()
-                .HasOne(x => x.Utilizador)
-                .WithOne()
-                .HasForeignKey<Aluno>(x => x.IdUtilizador)
-                .IsRequired(false);*/
 
             modelBuilder.Entity<Duvida>()
                 .HasOne(x => x.RespostaDuvida)

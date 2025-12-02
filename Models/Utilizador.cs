@@ -27,5 +27,10 @@ namespace EstudeX.Models
         public ICollection<Duvida>? Duvida { get; set; }
         [JsonIgnore]
         public ICollection<RespostaDuvida>? RespostaDuvida { get; set; }
+
+        internal static int UtilizadorId()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
