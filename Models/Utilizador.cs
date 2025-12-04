@@ -22,6 +22,9 @@ namespace EstudeX.Models
         public string UF { get; set; }
         public byte[]? Foto { get; set; }
         public byte[]? Senha { get; set; }
+        public TipoUtilizador TipoUtilizador { get; set; }
+
+        public int? TipoUtilizadorIdTipoUtilizador  { get; set; }
 
         [JsonIgnore]
         public ICollection<Duvida>? Duvida { get; set; }

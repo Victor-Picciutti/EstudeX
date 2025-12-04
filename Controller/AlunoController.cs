@@ -34,5 +34,55 @@ namespace EstudeX.Controller
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(Aluno novoAluno)
+        {
+            try
+            {
+
+                await _context.TBL_ALUNO.AddAsync(novoAluno);
+                await _context.SaveChangesAsync();
+
+                return Ok(novoAluno.IdUtilizador);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(Aluno novoAluno)
+        {
+            try
+            {
+                _context.TBL_UTILIZADOR.Update(novoAluno);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+
+                return Ok(linhasAfetadas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                Aluno aRemover = await _context.TBL_ALUNO.FirstOrDefaultAsync(p => p.IdUtilizador == id);
+
+                _context.TBL_UTILIZADOR.Remove(aRemover);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

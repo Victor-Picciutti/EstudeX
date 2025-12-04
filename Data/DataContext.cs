@@ -36,6 +36,7 @@ namespace EstudeX.Data
             modelBuilder.Entity<Aluno>().ToTable("TBL_ALUNO");
             modelBuilder.Entity<RespostaDuvida>().ToTable("TBL_RESPOSTADUVIDA");
             modelBuilder.Entity<Serie>().ToTable("TBL_SERIE");
+            modelBuilder.Entity<TipoUtilizador>().ToTable("TBL_TIPOUTILIZADOR");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Utilizador>().HasKey(x => x.IdUtilizador); 
             modelBuilder.Entity<Utilizador>().Property(x => x.Nome).HasColumnName("Nome");
@@ -44,6 +45,8 @@ namespace EstudeX.Data
             modelBuilder.Entity<Utilizador>().Property(x => x.UF).HasColumnName("UF");
             modelBuilder.Entity<Utilizador>().Property(x => x.Foto).HasColumnName("Foto");
             modelBuilder.Entity<Utilizador>().Property(x => x.Senha).HasColumnName("Senha");
+            modelBuilder.Entity<Utilizador>().Property(x => x.TipoUtilizador).HasColumnName(" Senha");
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Duvida>().HasKey(x => x.IdDuvida);
             modelBuilder.Entity<Duvida>().Property(x => x.Titulo).HasColumnName("Titulo");
@@ -55,14 +58,16 @@ namespace EstudeX.Data
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.IdDuvida).HasColumnName("idDuvida");
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.IdUtilizador).HasColumnName("idUtilizador");
             modelBuilder.Entity<RespostaDuvida>().Property(x => x.Momento).HasColumnName("Momento");
-            modelBuilder.Entity<RespostaDuvida>().Property(x => x.ConteudoResposta).HasColumnName("TBL_ConteudoReposta");
+            modelBuilder.Entity<RespostaDuvida>().Property(x => x.ConteudoResposta).HasColumnName("ConteudoResposta");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Aluno>().Property(x => x.idSerie).HasColumnName("idSerie");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             modelBuilder.Entity<Serie>().HasKey(x => x.idSerie);
             modelBuilder.Entity<Serie>().Property(x => x.Ano).HasColumnName("Ano");
             modelBuilder.Entity<Serie>().Property(x => x.Inicio).HasColumnName("Inicio");
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            modelBuilder.Entity<TipoUtilizador>().HasKey(x => x.IdTipoUtilizador);
+            modelBuilder.Entity<TipoUtilizador>().Property(x => x.Cargo).HasColumnName("cargo");
 
             
 
@@ -89,6 +94,16 @@ namespace EstudeX.Data
                 .WithMany(x => x.Alunos)
                 .HasForeignKey(x => x.idSerie)
                 .IsRequired(true);  
+
+            modelBuilder.Entity<Utilizador>()
+                .HasOne(u => u.TipoUtilizador)       
+                .WithMany()                          
+                .HasForeignKey(u => u.TipoUtilizadorIdTipoUtilizador)  
+                .IsRequired(false);                  
+
+            modelBuilder.Entity<Utilizador>()
+                .Property(u => u.TipoUtilizadorIdTipoUtilizador)
+                .HasColumnName("IdTipoUtilizador");  
    
 
                
