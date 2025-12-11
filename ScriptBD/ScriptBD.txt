@@ -1,0 +1,291 @@
+CREATE DATABASE EstudeX;
+USE EstudeX;
+ 
+CREATE TABLE TBL_CONTRATOUTILIZADOR (
+  Contrato_nroContrato INT NOT NULL,
+  Utilizador_idUtilizador INT NOT NULL
+);
+CREATE TABLE TBL_ALUNO (
+  idUtilizador INT IDENTITY(1,1) NOT NULL,
+  idSerie INT NOT NULL
+);
+ 
+CREATE TABLE TBL_TIPOUTILIZADOR(
+ 
+	idTipoUtilizador INT IDENTITY(1,1) NOT NULL,
+ 
+	cargo VARCHAR(50) NOT NULL,
+ 
+	PRIMARY KEY(idTipoUtilizador)
+);
+CREATE TABLE TBL_ATIVIDADE (
+  idAtividade INT IDENTITY(1,1) NOT NULL,
+  Titulo VARCHAR(25),
+  DataCriacao DATETIME,
+  PontuacaoMaxima INT,
+  PRIMARY KEY(idAtividade)
+);
+CREATE TABLE TBL_ATIVIDADEPERGUNTA (
+  idPergunta INT NOT NULL,
+  idAtividade INT NOT NULL,
+  idNivelDificuldade INT NOT NULL,
+  Enunciado VARCHAR(125),
+  PRIMARY KEY(idPergunta)
+);
+CREATE TABLE TBL_ATIVIDADERESPOSTA (
+  idAtividade INT NOT NULL,
+  idAtividadeAluno INT,
+  momentoInicio DATETIME,
+  momentoFim DATETIME,
+  pontuacao FLOAT,
+);
+CREATE TABLE TBL_COMUNICADO (
+  idComunicado INT IDENTITY(1,1) NOT NULL,
+  idSerie INT NOT NULL,
+  Titulo VARCHAR(25),
+  Descricao VARCHAR(255),
+  DataEnvio DATE,
+  UtilizadorResponsavel VARCHAR(45),
+  DataPublicacao DATETIME,
+  PRIMARY KEY(idComunicado)
+);
+CREATE TABLE TBL_CONTEUDO (
+  idConteudo INT IDENTITY(1,1) NOT NULL,
+  idDisciplina INT NOT NULL,
+  Titulo VARCHAR(25),
+  Texto VARCHAR(255),
+  PRIMARY KEY(idConteudo)
+);
+CREATE TABLE TBL_CONTRATO (
+  nroContrato INT NOT NULL,
+  dcContrato DATETIME,
+  daContrato DATETIME,
+  StatusContrato VARCHAR(50),
+  UtilizadorResponsavel VARCHAR(50),
+  PRIMARY KEY(nroContrato)
+);
+CREATE TABLE TBL_CRONOGRAMA (
+  idCronograma INT IDENTITY(1,1) NOT NULL,
+  idConteudo INT NOT NULL,
+  Atividade_idAtividade INT NOT NULL,
+  PRIMARY KEY(idCronograma)
+);
+CREATE TABLE TBL_DISCIPLINA (
+  idDisciplina INT IDENTITY(1,1) NOT NULL,
+  Nome VARCHAR(50),
+  PRIMARY KEY(idDisciplina)
+);
+INSERT INTO TBL_DISCIPLINA VALUES ('MATEMÁTICA');
+INSERT INTO TBL_DISCIPLINA VALUES ('LÍNGUA PORTUGUESA');
+INSERT INTO TBL_DISCIPLINA VALUES ('FÍSICA');
+INSERT INTO TBL_DISCIPLINA VALUES ('QUÍMICA');
+ 
+CREATE TABLE TBL_DUVIDA (
+  idDuvida INT IDENTITY(1,1) NOT NULL,
+  idConteudo INT NOT NULL,
+  idUtilizador INT,
+  Titulo VARCHAR(25),
+  Descricao VARCHAR(255),
+  Momento DATETIME,
+  StatusDuvida VARCHAR(20),
+  PRIMARY KEY(idDuvida)
+);
+ 
+CREATE TABLE TBL_NIVELDIFICULDADE (
+  idNivelDificuldade INT IDENTITY(1,1) NOT NULL,
+  Nome VARCHAR(45),
+  PRIMARY KEY(idNivelDificuldade)
+);
+CREATE TABLE TBL_PERGUNTASOPCOES (
+  idOpcao INT IDENTITY(1,1) NOT NULL,
+  idPergunta INT NOT NULL,
+  Descricao VARCHAR(255),
+  Correta VARCHAR(10),
+  PRIMARY KEY(idOpcao)
+);
+CREATE TABLE TBL_RESPOSTADUVIDA (
+  idDuvida INT NOT NULL,
+  idUtilizador INT,
+  Momento DATETIME,
+  ConteudoResposta VARCHAR(255),
+  PRIMARY KEY(idDuvida)
+);
+CREATE TABLE TBL_SERIE (
+  idSerie INT IDENTITY(1,1) NOT NULL,
+  Inicio DATE,
+  Ano VARCHAR(50),
+  PRIMARY KEY(idSerie)
+);
+CREATE TABLE TBL_UTILIZADOR (
+  idUtilizador INT IDENTITY(1,1) NOT NULL,
+  idTipoUtilizador INT NOT NULL,
+  Nome VARCHAR(45),
+  CPF CHAR(14),
+  Cidade VARCHAR(25),
+  UF CHAR(2),
+  Foto BIT,
+  Senha VARCHAR(25),
+  PRIMARY KEY(idUtilizador)
+);
+CREATE TABLE TBL_UTILIZADORATIVIDADERESPOSTAS (
+  idUtilizadorAtividadeAlunos INT NOT NULL,
+  idAtividade INT NOT NULL,
+  idPergunta INT NOT NULL,
+  PontuacaoObtida FLOAT,
+  DataResposta DATETIME,
+  PRIMARY KEY(idUtilizadorAtividadeAlunos)
+);
+CREATE TABLE TBL_VIGENCIAS (
+  nroContrato INT NOT NULL,
+  inVigencia DATETIME,
+  fnVigencia DATETIME,
+  dcProrrogacao DATETIME,
+  idUtilizador INT NOT NULL,
+  PRIMARY KEY(nroContrato, idUtilizador)
+);
+ALTER TABLE TBL_VIGENCIAS
+  ADD CONSTRAINT FK_VIGENCIAS_UTILIZADOR
+  FOREIGN KEY (idUtilizador) REFERENCES TBL_UTILIZADOR(idUtilizador);
+ALTER TABLE TBL_VIGENCIAS
+  ADD CONSTRAINT FK_VIGENCIAS_CONTRATO
+  FOREIGN KEY (nroContrato) REFERENCES TBL_CONTRATO(nroContrato);
+ 
+ALTER TABLE TBL_CONTRATOUTILIZADOR
+  ADD CONSTRAINT FK_CONTRATOUTILIZADOR_CONTRATO
+  FOREIGN KEY (Contrato_nroContrato) REFERENCES TBL_CONTRATO(nroContrato);
+ALTER TABLE TBL_CONTRATOUTILIZADOR
+  ADD CONSTRAINT FK_CONTRATOUTILIZADOR_UTILIZADOR
+  FOREIGN KEY (Utilizador_idUtilizador) REFERENCES TBL_UTILIZADOR(idUtilizador);
+ 
+ALTER TABLE TBL_RESPOSTADUVIDA
+  ADD CONSTRAINT FK_RESPOSTADUVIDA_UTILIZADOR
+  FOREIGN KEY (idUtilizador) REFERENCES TBL_UTILIZADOR(idUtilizador);
+ 
+ALTER TABLE TBL_DUVIDA
+  ADD CONSTRAINT FK_DUVIDA_CONTEUDO
+  FOREIGN KEY (idConteudo) REFERENCES TBL_CONTEUDO(idConteudo);
+ 
+ALTER TABLE TBL_DUVIDA
+  ADD CONSTRAINT FK_DUVIDA_UTILIZADOR
+  FOREIGN KEY (idUtilizador) REFERENCES TBL_UTILIZADOR(idUtilizador);
+ 
+  ALTER TABLE TBL_UTILIZADOR
+  ADD CONSTRAINT FK_TIPOUTILIZADOR
+  FOREIGN KEY (idTipoUtilizador) REFERENCES TBL_TIPOUTILIZADOR(idTipoUtilizador);
+ 
+ALTER TABLE TBL_CONTEUDO
+  ADD CONSTRAINT FK_CONTEUDO_DISCIPLINA
+  FOREIGN KEY (idDisciplina) REFERENCES TBL_DISCIPLINA(idDisciplina);
+ 
+ALTER TABLE TBL_CRONOGRAMA
+  ADD CONSTRAINT FK_CRONOGRAMA_CONTEUDO
+  FOREIGN KEY (idConteudo) REFERENCES TBL_CONTEUDO(idConteudo);
+ 
+ALTER TABLE TBL_CRONOGRAMA
+  ADD CONSTRAINT FK_CRONOGRAMA_ATIVIDADE
+  FOREIGN KEY (Atividade_idAtividade) REFERENCES TBL_ATIVIDADE(idAtividade);
+ 
+ALTER TABLE TBL_ALUNO
+  ADD CONSTRAINT FK_ALUNO_UTILIZADOR
+  FOREIGN KEY (idUtilizador) REFERENCES TBL_UTILIZADOR(idUtilizador);
+ 
+ALTER TABLE TBL_ALUNO
+  ADD CONSTRAINT FK_ALUNO_SERIE
+  FOREIGN KEY (idSerie) REFERENCES TBL_SERIE(idSerie);
+ 
+ALTER TABLE TBL_ATIVIDADEPERGUNTA
+  ADD CONSTRAINT FK_ATIVIDADEPERGUNTA_ATIVIDADE
+  FOREIGN KEY (idAtividade) REFERENCES TBL_ATIVIDADE(idAtividade);
+ 
+ALTER TABLE TBL_ATIVIDADEPERGUNTA
+  ADD CONSTRAINT FK_ATIVIDADEPERGUNTA_NIVEL
+  FOREIGN KEY (idNivelDificuldade) REFERENCES TBL_NIVELDIFICULDADE(idNivelDificuldade);
+ 
+ALTER TABLE TBL_PERGUNTASOPCOES
+  ADD CONSTRAINT FK_PERGUNTASOPCOES_PERGUNTA
+  FOREIGN KEY (idPergunta) REFERENCES TBL_ATIVIDADEPERGUNTA(idPergunta);
+ 
+ALTER TABLE TBL_ATIVIDADERESPOSTA
+  ADD CONSTRAINT FK_ATIVIDADERESPOSTA_ATIVIDADE
+  FOREIGN KEY (idAtividade) REFERENCES TBL_ATIVIDADE(idAtividade);
+ 
+ALTER TABLE TBL_UTILIZADORATIVIDADERESPOSTAS
+  ADD CONSTRAINT FK_USERATIVIDADERESP_ATIVIDADE
+  FOREIGN KEY (idAtividade) REFERENCES TBL_ATIVIDADE(idAtividade);
+ 
+ALTER TABLE TBL_UTILIZADORATIVIDADERESPOSTAS
+  ADD CONSTRAINT FK_USERATIVIDADERESP_PERGUNTA
+  FOREIGN KEY (idPergunta) REFERENCES TBL_ATIVIDADEPERGUNTA(idPergunta);
+ 
+ALTER TABLE TBL_COMUNICADO
+  ADD CONSTRAINT FK_COMUNICADO_SERIE
+  FOREIGN KEY (idSerie) REFERENCES TBL_SERIE(idSerie);
+ 
+INSERT INTO TBL_UTILIZADOR (nome, cpf, uf, cidade, idTipoUtilizador) VALUES
+('Ana Beatriz Silva', '111.222.333-44', 'SP', 'São Paulo',1),
+('Carlos Eduardo Santos', '222.333.444-55', 'SP', 'São Paulo',3),
+('Mariana Oliveira Costa', '333.444.555-66', 'SP', 'São Paulo',4),
+('João Pedro Ferreira', '444.555.666-77', 'SP', 'São Paulo',4),
+('Beatriz Mendes Rocha', '555.666.777-88', 'SP', 'São Paulo',3),
+('Lucas Gabriel Martins', '666.777.888-99', 'SP', 'São Paulo',2),
+('Letícia Ramos Araújo', '777.888.999-00', 'SP', 'São Paulo',3),
+('Fernando Lima Barros', '888.999.000-11', 'SP', 'São Paulo',5),
+('Julia Santos Ribeiro', '999.000.111-22', 'SP', 'São Paulo',5),
+('Rafaela Monteiro Alves', '000.111.222-33', 'SP', 'São Paulo',5);
+ 
+INSERT INTO TBL_TIPOUTILIZADOR(cargo) VALUES
+('Diretor'),
+('Coordenador'),
+('Professor'),
+('Monitor'),
+('Aluno');
+SET IDENTITY_INSERT TBL_UTILIZADOR OFF;
+SET IDENTITY_INSERT TBL_SERIE OFF;
+INSERT INTO TBL_ALUNO (idUtilizador, idSerie) VALUES
+(8, 2),
+(9, 4),
+(10, 6);
+ 
+SET IDENTITY_INSERT TBL_ALUNO ON;
+SET IDENTITY_INSERT TBL_UTILIZADOR ON;
+SET IDENTITY_INSERT TBL_SERIE ON;
+ 
+INSERT INTO TBL_SERIE (Inicio, Ano) VALUES
+('2025-01-01', 'Sexto ano do Ensino Fundamental'),
+('2025-01-01', 'Sétimo ano do Ensino Fundamental'),
+('2025-01-01', 'Oitavo ano do Ensino Fundamental'),
+('2025-01-01', 'Nono ano do Ensino Fundamental'),
+('2025-01-01', 'Primeiro ano do Ensino Médio'),
+('2025-01-01', 'Segundo ano do Ensino Médio'),
+('2025-01-01', 'Terceiro ano do Ensino Médio');
+
+INSERT INTO TBL_DUVIDA (idConteudo, idUtilizador, Titulo, Descricao, Momento, StatusDuvida)
+VALUES
+(1, 8, 'Erro no código', 'Estou com problemas ao compilar o código em Java.', GETDATE(), 'Aberta'),
+
+(2, 9, 'Dúvida sobre SQL', 'Não estou entendendo como funciona o INNER JOIN.', GETDATE(), 'Aberta'),
+
+(3, 10, 'Ajuda com HTML', 'Por que minha página não exibe o layout corretamente?', GETDATE(), 'Respondida'),
+
+(1, 9, 'Conceito de Classes', 'Pode explicar melhor o que são classes e objetos?', GETDATE(), 'Aberta'),
+
+(4, 8, 'Problema no servidor', 'O servidor está recusando conexões, o que pode ser?', GETDATE(), 'Em Análise');
+
+INSERT INTO TBL_CONTEUDO (idDisciplina, Titulo, Texto)
+VALUES
+(1, 'Introdução SQL', 'Conteúdo básico sobre criação de tabelas, inserts e consultas.'),
+
+(1, 'Joins SQL', 'Explicação detalhada sobre INNER JOIN, LEFT JOIN e RIGHT JOIN.'),
+
+(2, 'Programação Java', 'Conceitos iniciais sobre classes, objetos e métodos.'),
+
+(2, 'Herança Java', 'Descrição de como funciona herança, polimorfismo e encapsulamento.'),
+
+(3, 'HTML Básico', 'Introdução à estrutura de páginas HTML e principais tags.'),
+
+(3, 'CSS Inicial', 'Explicação sobre seletores, estilos e posicionamento de elementos.'),
+
+(4, 'Redes de Computadores', 'Principais conceitos de IP, máscaras e modelos OSI.'),
+
+(4, 'Servidores Web', 'Explicação sobre funcionamento de servidores HTTP e HTTPS.');
+

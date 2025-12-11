@@ -1,0 +1,53 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "coreclr",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/bin/Debug/net9.0/EstudeX.dll",
+      "stopAtEntry": false,
+      "env": {
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "logging": {
+        "moduleLoad": false
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "name": "EstudeX [http]",
+      "preLaunchTask": "EstudeX",
+      "args": []
+    },
+    {
+      "type": "coreclr",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/bin/Debug/net9.0/EstudeX.dll",
+      "stopAtEntry": false,
+      "env": {
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "logging": {
+        "moduleLoad": false
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "name": "EstudeX [https]",
+      "preLaunchTask": "EstudeX",
+      "args": []
+    },
+    {
+      "name": "Attach to a .NET Process",
+      "type": "coreclr",
+      "request": "attach",
+      "logging": {
+        "moduleLoad": false
+      }
+    }
+  ]
+}
